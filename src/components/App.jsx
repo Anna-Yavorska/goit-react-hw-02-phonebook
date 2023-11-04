@@ -21,20 +21,21 @@ export class App extends Component {
   addContact = newContact => {
     const { contacts } = this.state;
     const isDuplicate = contacts.some(
-      contact => contact.name === newContact.name
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
 
     if (isDuplicate) {
       alert(`${newContact.name} is already in contacts.`);
-    } else {
-      const contact = {
-        ...newContact,
-        id: nanoid(),
-      };
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, contact],
-      }));
+      return;
     }
+    
+    const contact = {
+      ...newContact,
+      id: nanoid(),
+    };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, contact],
+    }));
   };
 
   updateFilter = newFilter => {
